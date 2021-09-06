@@ -1,17 +1,13 @@
 package com.yaromchikv.ecars.fragments.add
 
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isNotEmpty
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputLayout
 import com.yaromchikv.ecars.R
 import com.yaromchikv.ecars.data.Car
 import com.yaromchikv.ecars.data.CarViewModel
@@ -44,23 +40,18 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
-        val name = binding.addDescriptionText.toString()
-        val description = binding.addDescriptionText.toString()
-        val price = binding.addPriceText.toString()
+        val name = binding.addDescriptionText.editText?.text.toString()
+        val description = binding.addDescriptionText.editText?.text.toString()
+        val price = binding.addPriceText.editText?.text.toString().toDoubleOrNull()
 
-        if (inputCheck(name, description, price)) {
-            val car = Car(0, name, description, price.toDouble())
+        if (name.isNotEmpty() && description.isNotEmpty() && price != null) {
+            val car = Car(0, name, description, price)
             carViewModel.addCar(car)
             Toast.makeText(requireContext(), "Added!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
-        }
-        else {
+        } else {
             Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun inputCheck(name: String, description: String, price: String): Boolean {
-        return name.isNotEmpty() && description.isNotEmpty() && price.isNotEmpty()
     }
 
     override fun onDestroyView() {
