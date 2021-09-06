@@ -40,12 +40,12 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
-        val name = binding.addDescriptionText.editText?.text.toString()
-        val description = binding.addDescriptionText.editText?.text.toString()
+        val name = binding.addModelText.editText?.text.toString()
+        val acceleration = binding.addAccelerationText.editText?.text.toString().toDoubleOrNull()
         val price = binding.addPriceText.editText?.text.toString().toDoubleOrNull()
 
-        if (name.isNotEmpty() && description.isNotEmpty() && price != null) {
-            val car = Car(0, name, description, price)
+        if (name.isNotEmpty() && acceleration != null && price != null) {
+            val car = Car(0, name, acceleration, price)
             carViewModel.addCar(car)
             Toast.makeText(requireContext(), "Added!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
