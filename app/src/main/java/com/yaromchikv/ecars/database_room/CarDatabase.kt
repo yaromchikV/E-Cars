@@ -1,9 +1,10 @@
-package com.yaromchikv.ecars.data
+package com.yaromchikv.ecars.database_room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.yaromchikv.ecars.model.Car
 
 @Database(entities = [Car::class], version = 1, exportSchema = false)
 abstract class CarDatabase : RoomDatabase() {

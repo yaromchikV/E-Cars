@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yaromchikv.ecars.R
-import com.yaromchikv.ecars.data.CarViewModel
+import com.yaromchikv.ecars.viewmodel.CarViewModel
 import com.yaromchikv.ecars.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {

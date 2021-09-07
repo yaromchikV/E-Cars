@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yaromchikv.ecars.R
-import com.yaromchikv.ecars.data.Car
-import com.yaromchikv.ecars.data.CarViewModel
+import com.yaromchikv.ecars.model.Car
+import com.yaromchikv.ecars.viewmodel.CarViewModel
 import com.yaromchikv.ecars.databinding.FragmentAddBinding
 
 class AddFragment : Fragment() {
@@ -40,7 +40,7 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
-        val name = binding.addModelText.editText?.text.toString()
+        val name = binding.addNameText.editText?.text.toString()
         val acceleration = binding.addAccelerationText.editText?.text.toString().toDoubleOrNull()
         val price = binding.addPriceText.editText?.text.toString().toDoubleOrNull()
 
