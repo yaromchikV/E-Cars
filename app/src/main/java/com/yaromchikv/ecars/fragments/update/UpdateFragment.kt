@@ -1,19 +1,15 @@
 package com.yaromchikv.ecars.fragments.update
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.yaromchikv.ecars.R
-import com.yaromchikv.ecars.databinding.FragmentListBinding
 import com.yaromchikv.ecars.databinding.FragmentUpdateBinding
-import com.yaromchikv.ecars.fragments.list.ListAdapter
 import com.yaromchikv.ecars.model.Car
 import com.yaromchikv.ecars.viewmodel.CarViewModel
 
@@ -35,6 +31,8 @@ class UpdateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
 
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
 
@@ -62,6 +60,35 @@ class UpdateFragment : Fragment() {
             Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_delete) {
+            deleteCar()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteCar() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setPositiveButton("Yes") { _, _ ->
+                carViewModel.deleteCar(args.currentCar)
+                Toast.makeText(
+                    requireContext(),
+                    "Delete: ${args.currentCar.name}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            }
+            setNegativeButton("No") { _, _ -> }
+            setTitle("Delete ${args.currentCar.name}?")
+            setMessage("Really?")
+        }.create().show()
     }
 
     override fun onDestroyView() {
