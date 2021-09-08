@@ -18,9 +18,6 @@ class UpdateFragment : Fragment() {
     private var _binding: FragmentUpdateBinding? = null
     private val binding get() = _binding!!
 
-    private val args by navArgs<UpdateFragmentArgs>()
-    private lateinit var carViewModel: CarViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,6 +25,14 @@ class UpdateFragment : Fragment() {
         _binding = FragmentUpdateBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private val args by navArgs<UpdateFragmentArgs>()
+    private lateinit var carViewModel: CarViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -89,10 +94,5 @@ class UpdateFragment : Fragment() {
             setTitle("Delete ${args.currentCar.name}?")
             setMessage("Really?")
         }.create().show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

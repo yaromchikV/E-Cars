@@ -1,0 +1,19 @@
+<resources>
+
+    <string-array name="implementation_values">
+        <item>Room</item>
+        <item>Cursors</item>
+    </string-array>
+
+    <string-array name="sort_by_values">
+        <item>Name</item>
+        <item>Acceleration</item>
+        <item>Price</item>
+    </string-array>
+
+    <string-array name="sort_order_values">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+
+</resources>

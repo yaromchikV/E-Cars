@@ -1,0 +1,29 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        app:defaultValue="Cursors"
+        app:entries="@array/implementation_values"
+        app:entryValues="@array/implementation_values"
+        app:key="implementation"
+        app:title="Implementation"
+        app:useSimpleSummaryProvider="true" />
+
+    <PreferenceCategory app:title="Sorting">
+        <ListPreference
+            app:defaultValue="Name"
+            app:entries="@array/sort_by_values"
+            app:entryValues="@array/sort_by_values"
+            app:key="sort_by"
+            app:title="Sort By"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="Ascending"
+            app:entries="@array/sort_order_values"
+            app:entryValues="@array/sort_order_values"
+            app:key="sort_order"
+            app:title="Sort Order"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

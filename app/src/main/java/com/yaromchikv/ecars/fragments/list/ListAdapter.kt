@@ -12,7 +12,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var carList = emptyList<Car>()
 
-    class MyViewHolder(val binding: DataItemBinding) :
+    class MyViewHolder(private val binding: DataItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car) {
             binding.nameText.text = car.name

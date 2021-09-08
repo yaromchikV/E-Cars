@@ -1,13 +1,14 @@
 package com.yaromchikv.ecars.fragments.list
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yaromchikv.ecars.R
 import com.yaromchikv.ecars.viewmodel.CarViewModel
@@ -18,8 +19,6 @@ class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var carViewModel: CarViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,8 +27,17 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private lateinit var carViewModel: CarViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
 
         val listAdapter = ListAdapter()
         binding.recyclerView.apply {
@@ -38,8 +46,14 @@ class ListFragment : Fragment() {
         }
 
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
-        carViewModel.readAllData.observe(viewLifecycleOwner, Observer { car ->
-            listAdapter.setData(car)
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val sortBy = prefs.getString("sort_by", "Name")
+        val sortOrder = prefs.getString("sort_order", "Ascending")
+        carViewModel.sortCars(sortBy ?: "Name", sortOrder ?: "Ascending")
+
+        carViewModel.allData.observe(viewLifecycleOwner, Observer { newListOfCar ->
+            listAdapter.setData(newListOfCar)
         })
 
         binding.floatingActionButton.setOnClickListener {
@@ -47,8 +61,14 @@ class ListFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.settings_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_settings) {
+            findNavController().navigate(R.id.action_listFragment_to_settingsFragment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

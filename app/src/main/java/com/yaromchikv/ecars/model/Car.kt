@@ -14,4 +14,5 @@ data class Car(
     val name: String,
     val acceleration: Double,
     val price: Double
+
 ): Parcelable

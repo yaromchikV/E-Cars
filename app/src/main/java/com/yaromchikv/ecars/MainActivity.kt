@@ -18,9 +18,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         setupActionBarWithNavController(navHostFragment.navController)
+
+        //PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
     }
 
     override fun onSupportNavigateUp(): Boolean {

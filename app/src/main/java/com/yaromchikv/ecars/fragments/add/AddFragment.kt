@@ -18,21 +18,25 @@ class AddFragment : Fragment() {
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var carViewModel: CarViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddBinding.inflate(inflater, container, false)
-
-        carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
-
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private lateinit var carViewModel: CarViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
 
         binding.addButton.setOnClickListener {
             insertDataToDatabase()
@@ -52,10 +56,5 @@ class AddFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
