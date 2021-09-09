@@ -3,10 +3,11 @@ package com.yaromchikv.ecars.fragments.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.yaromchikv.ecars.model.Car
 import com.yaromchikv.ecars.databinding.DataItemBinding
+import com.yaromchikv.ecars.displayAcceleration
+import com.yaromchikv.ecars.displayPrice
+import com.yaromchikv.ecars.model.Car
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
@@ -16,8 +17,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car) {
             binding.nameText.text = car.name
-            binding.accelerationText.text = car.acceleration.toString()
-            binding.priceText.text = car.price.toString()
+            binding.accelerationText.text = car.acceleration.displayAcceleration()
+            binding.priceText.text = car.price.displayPrice()
+            binding.carImage.setImageResource(car.image)
 
             binding.cardView.setOnClickListener {
                 val action = ListFragmentDirections.actionListFragmentToUpdateFragment(car)

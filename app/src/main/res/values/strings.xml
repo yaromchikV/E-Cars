@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">E-Cars</string>
+    <string name="model">Model</string>
+    <string name="_0_100_km_h">0–100 km/h</string>
+    <string name="price">Price</string>
+    <string name="add_e_car">Add E-Car</string>
+    <string name="update_e_car">Update E-Car</string>
+    <string name="image_of_car">Image of car</string>
 </resources>

@@ -1,10 +1,6 @@
 package com.yaromchikv.ecars.database_room
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import com.yaromchikv.ecars.database_room.CarDao
 import com.yaromchikv.ecars.model.Car
 
 class CarRepository(private val carDao: CarDao) {

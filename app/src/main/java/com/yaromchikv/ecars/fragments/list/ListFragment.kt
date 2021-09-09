@@ -1,10 +1,8 @@
 package com.yaromchikv.ecars.fragments.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -52,7 +50,7 @@ class ListFragment : Fragment() {
         val sortOrder = prefs.getString("sort_order", "Ascending")
         carViewModel.sortCars(sortBy ?: "Name", sortOrder ?: "Ascending")
 
-        carViewModel.allData.observe(viewLifecycleOwner, Observer { newListOfCar ->
+        carViewModel.allData.observe(viewLifecycleOwner, { newListOfCar ->
             listAdapter.setData(newListOfCar)
         })
 

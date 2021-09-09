@@ -3,8 +3,8 @@ package com.yaromchikv.ecars.fragments.update
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -53,10 +53,11 @@ class UpdateFragment : Fragment() {
     private fun updateItem() {
         val name = binding.updateNameText.editText?.text.toString()
         val acceleration = binding.updateAccelerationText.editText?.text.toString().toDoubleOrNull()
-        val price = binding.updatePriceText.editText?.text.toString().toDoubleOrNull()
+        val price = binding.updatePriceText.editText?.text.toString().toIntOrNull()
 
-        if (name.isNotEmpty() && acceleration != null && price != null) {
-            val updatedCar = Car(args.currentCar.id, name, acceleration, price)
+        if (name.length > 3 && (acceleration != null && acceleration > 1) && (price != null && price >= 100)) {
+            val updatedCar =
+                Car(args.currentCar.id, name, acceleration, price, carViewModel.getRandomImage())
             carViewModel.updateCar(updatedCar)
             Toast.makeText(requireContext(), "Update", Toast.LENGTH_SHORT).show()
 
