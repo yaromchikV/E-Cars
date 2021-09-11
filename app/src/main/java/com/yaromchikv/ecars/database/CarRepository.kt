@@ -1,6 +1,7 @@
 package com.yaromchikv.ecars.database
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.yaromchikv.ecars.database.room.CarDao
 import com.yaromchikv.ecars.database.sqilte.DatabaseHelper
@@ -32,10 +33,7 @@ class CarRepository(
     private val prefs: SharedPreferences
 ) {
 
-    val allData: LiveData<List<Car>> = getDataUsingRoom(
-        prefs.getString("sort_by", "name") ?: "name",
-        prefs.getString("sort_order", "ASC") ?: "ASC"
-    )
+    val allData: LiveData<List<Car>> = carDao.getAllSortedByNameInAscendingOrder()
 
     suspend fun addCar(car: Car) {
         val useRoom = prefs.getBoolean("implementation", true)
@@ -81,7 +79,7 @@ class CarRepository(
         return listOfCar
     }
 
-    private fun getDataUsingRoom(sortBy: String, sortOrder: String): LiveData<List<Car>> {
+    fun changeDaoQuery(sortBy: String, sortOrder: String): LiveData<List<Car>> {
         return when ("SELECT * FROM $TABLE_NAME ORDER BY $sortBy $sortOrder") {
             QUERY_ORDER_BY_NAME_DESC -> carDao.getAllSortedByNameInDescendingOrder()
             QUERY_ORDER_BY_ACCELERATION_ASC -> carDao.getAllSortedByAccelerationInAscendingOrder()

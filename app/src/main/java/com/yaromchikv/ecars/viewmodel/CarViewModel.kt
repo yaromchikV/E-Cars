@@ -14,13 +14,16 @@ import kotlinx.coroutines.launch
 
 class CarViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var carDao = CarDatabase.getDatabase(application).carDao()
-    private var carDatabaseHelper = DatabaseHelper(application)
+    private val carDao = CarDatabase.getDatabase(application).carDao()
+    private val carDatabaseHelper = DatabaseHelper(application)
     private val prefs = PreferenceManager.getDefaultSharedPreferences(application)
 
     private val repository = CarRepository(carDao, carDatabaseHelper, prefs)
 
     var allDataFromRoom: LiveData<List<Car>> = repository.allData
+
+    var sortBy = "name"
+    var sortOrder = "ASC"
 
     fun addCar(car: Car) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -40,7 +43,11 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getDataUsingCursors(sortBy: String, sortOrder: String): List<Car> {
+    fun getDataUsingCursors(): List<Car> {
         return repository.getDataUsingCursors(sortBy, sortOrder)
+    }
+
+    fun changeDaoQuery() {
+        allDataFromRoom = repository.changeDaoQuery(sortBy, sortOrder)
     }
 }

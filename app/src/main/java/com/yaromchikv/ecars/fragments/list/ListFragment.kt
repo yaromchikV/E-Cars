@@ -1,6 +1,7 @@
 package com.yaromchikv.ecars.fragments.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -50,12 +51,19 @@ class ListFragment : Fragment() {
         val sortBy = prefs.getString("sort_by", "name") ?: "name"
         val sortOrder = prefs.getString("sort_order", "ASC") ?: "ASC"
 
+        if (carViewModel.sortBy != sortBy || carViewModel.sortOrder != sortOrder) {
+            carViewModel.sortBy = sortBy
+            carViewModel.sortOrder = sortOrder
+            if (useRoom)
+                carViewModel.changeDaoQuery()
+        }
+
         if (useRoom) {
             carViewModel.allDataFromRoom.observe(viewLifecycleOwner, { newListOfCar ->
                 listAdapter.setData(newListOfCar)
             })
         } else {
-            listAdapter.setData(carViewModel.getDataUsingCursors(sortBy, sortOrder))
+            listAdapter.setData(carViewModel.getDataUsingCursors())
         }
 
         binding.floatingActionButton.setOnClickListener {
