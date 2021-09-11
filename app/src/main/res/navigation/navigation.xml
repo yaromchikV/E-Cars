@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.yaromchikv.ecars.SettingsFragment"
+        android:name="com.yaromchikv.ecars.fragments.settings.SettingsFragment"
         android:label="Filter" >
         <action
             android:id="@+id/action_settingsFragment_to_listFragment"

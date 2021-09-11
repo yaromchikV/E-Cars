@@ -57,7 +57,7 @@ class UpdateFragment : Fragment() {
 
         if (name.length > 3 && (acceleration != null && acceleration > 1) && (price != null && price >= 100)) {
             val updatedCar =
-                Car(args.currentCar.id, name, acceleration, price, carViewModel.getRandomImage())
+                Car(args.currentCar.id, name, acceleration, price, args.currentCar.image)
             carViewModel.updateCar(updatedCar)
             Toast.makeText(requireContext(), "Update", Toast.LENGTH_SHORT).show()
 

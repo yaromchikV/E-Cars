@@ -5,21 +5,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.yaromchikv.ecars.R
-import com.yaromchikv.ecars.database_room.CarDatabase
-import com.yaromchikv.ecars.database_room.CarRepository
+import com.yaromchikv.ecars.database.CarRepository
 import com.yaromchikv.ecars.model.Car
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CarViewModel(application: Application) : AndroidViewModel(application) {
 
-    var allData: LiveData<List<Car>>
-    private val repository: CarRepository
+    var allDataFromRoom: LiveData<List<Car>>
+
+    private val repository: CarRepository = CarRepository(application)
 
     init {
-        val carDao = CarDatabase.getDatabase(application).carDao()
-        repository = CarRepository(carDao)
-        allData = repository.allData
+        allDataFromRoom = repository.allData
     }
 
     fun addCar(car: Car) {
@@ -40,8 +38,8 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun sortCars(sortBy: String, sortOrder: String) {
-        allData = repository.getSortCars(sortBy, sortOrder)
+    fun getDataUsingCursors(sortBy: String, sortOrder: String): List<Car> {
+        return repository.getDataUsingCursors(sortBy, sortOrder)
     }
 
     fun getRandomImage(): Int {

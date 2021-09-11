@@ -3,14 +3,14 @@ package com.yaromchikv.ecars.fragments.list
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yaromchikv.ecars.R
-import com.yaromchikv.ecars.viewmodel.CarViewModel
 import com.yaromchikv.ecars.databinding.FragmentListBinding
+import com.yaromchikv.ecars.viewmodel.CarViewModel
+
 
 class ListFragment : Fragment() {
 
@@ -46,13 +46,17 @@ class ListFragment : Fragment() {
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val sortBy = prefs.getString("sort_by", "Name")
-        val sortOrder = prefs.getString("sort_order", "Ascending")
-        carViewModel.sortCars(sortBy ?: "Name", sortOrder ?: "Ascending")
+        val useRoom = prefs.getBoolean("implementation", true)
+        val sortBy = prefs.getString("sort_by", "name") ?: "name"
+        val sortOrder = prefs.getString("sort_order", "ASC") ?: "ASC"
 
-        carViewModel.allData.observe(viewLifecycleOwner, { newListOfCar ->
-            listAdapter.setData(newListOfCar)
-        })
+        if (useRoom) {
+            carViewModel.allDataFromRoom.observe(viewLifecycleOwner, { newListOfCar ->
+                listAdapter.setData(newListOfCar)
+            })
+        } else {
+            listAdapter.setData(carViewModel.getDataUsingCursors(sortBy, sortOrder))
+        }
 
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)

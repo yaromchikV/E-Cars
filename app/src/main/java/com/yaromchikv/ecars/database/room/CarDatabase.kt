@@ -1,12 +1,14 @@
-package com.yaromchikv.ecars.database_room
+package com.yaromchikv.ecars.database.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.yaromchikv.ecars.database.DATABASE_NAME
+import com.yaromchikv.ecars.database.DATABASE_VERSION
 import com.yaromchikv.ecars.model.Car
 
-@Database(entities = [Car::class], version = 1, exportSchema = false)
+@Database(entities = [Car::class], version = DATABASE_VERSION, exportSchema = false)
 abstract class CarDatabase : RoomDatabase() {
 
     abstract fun carDao(): CarDao
@@ -25,7 +27,7 @@ abstract class CarDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     CarDatabase::class.java,
-                    "car_database"
+                    DATABASE_NAME
                 ).build()
                 INSTANCE = instance
                 return instance

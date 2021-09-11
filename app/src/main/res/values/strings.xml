@@ -6,4 +6,5 @@
     <string name="add_e_car">Add E-Car</string>
     <string name="update_e_car">Update E-Car</string>
     <string name="image_of_car">Image of car</string>
+    <string name="settings">Settings</string>
 </resources>

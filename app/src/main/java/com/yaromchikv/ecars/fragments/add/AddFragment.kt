@@ -45,6 +45,7 @@ class AddFragment : Fragment() {
 
     private fun insertDataToDatabase() {
         val name = binding.addNameText.editText?.text.toString()
+            .replace("\\s+".toRegex(), " ").trim()
         val acceleration = binding.addAccelerationText.editText?.text.toString().toDoubleOrNull()
         val price = binding.addPriceText.editText?.text.toString().toIntOrNull()
 

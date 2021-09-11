@@ -1,7 +1,8 @@
-package com.yaromchikv.ecars.database_room
+package com.yaromchikv.ecars.database.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.yaromchikv.ecars.database.*
 import com.yaromchikv.ecars.model.Car
 
 @Dao
@@ -16,22 +17,22 @@ interface CarDao {
     @Delete
     suspend fun deleteCar(car: Car)
 
-    @Query("SELECT * FROM cars_table ORDER BY name ASC")
+    @Query(QUERY_ORDER_BY_NAME_ASC)
     fun getAllSortedByNameInAscendingOrder(): LiveData<List<Car>>
 
-    @Query("SELECT * FROM cars_table ORDER BY name DESC")
+    @Query(QUERY_ORDER_BY_NAME_DESC)
     fun getAllSortedByNameInDescendingOrder(): LiveData<List<Car>>
 
-    @Query("SELECT * FROM cars_table ORDER BY acceleration ASC")
+    @Query(QUERY_ORDER_BY_ACCELERATION_ASC)
     fun getAllSortedByAccelerationInAscendingOrder(): LiveData<List<Car>>
 
-    @Query("SELECT * FROM cars_table ORDER BY acceleration DESC")
+    @Query(QUERY_ORDER_BY_ACCELERATION_DESC)
     fun getAllSortedByAccelerationInDescendingOrder(): LiveData<List<Car>>
 
-    @Query("SELECT * FROM cars_table ORDER BY price ASC")
+    @Query(QUERY_ORDER_BY_PRICE_ASC)
     fun getAllSortedByPriceInAscendingOrder(): LiveData<List<Car>>
 
-    @Query("SELECT * FROM cars_table ORDER BY price DESC")
+    @Query(QUERY_ORDER_BY_PRICE_DESC)
     fun getAllSortedByPriceInDescendingOrder(): LiveData<List<Car>>
 
 }

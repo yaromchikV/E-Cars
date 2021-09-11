@@ -1,7 +1,8 @@
-package com.yaromchikv.ecars
+package com.yaromchikv.ecars.fragments.settings
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
+import com.yaromchikv.ecars.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
