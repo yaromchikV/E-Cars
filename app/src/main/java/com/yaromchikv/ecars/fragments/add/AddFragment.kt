@@ -56,16 +56,12 @@ class AddFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter the model of the E-Car", Toast.LENGTH_SHORT).show()
             acceleration == null ->
                 Toast.makeText(requireContext(), "Please enter the acceleration of the E-Car", Toast.LENGTH_SHORT).show()
-            acceleration < 1 ->
-                Toast.makeText(requireContext(), "Please enter the acceleration greater than 1", Toast.LENGTH_SHORT).show()
             price == null ->
                 Toast.makeText(requireContext(), "Please enter the price of the E-Car", Toast.LENGTH_SHORT).show()
-            price < 100 ->
-                Toast.makeText(requireContext(), "Please enter the price greater than 100", Toast.LENGTH_SHORT).show()
             else -> {
                 val car = Car(0, name, acceleration, price, getRandomImage())
                 carViewModel.addCar(car)
-                Toast.makeText(requireContext(), "Added!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "$name successfully added", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(AddFragmentDirections.actionAddFragmentToListFragment())
             }
         }

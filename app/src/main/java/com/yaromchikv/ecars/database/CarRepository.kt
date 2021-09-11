@@ -1,10 +1,8 @@
 package com.yaromchikv.ecars.database
 
-import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
-import androidx.preference.PreferenceManager
 import com.yaromchikv.ecars.database.room.CarDao
-import com.yaromchikv.ecars.database.room.CarDatabase
 import com.yaromchikv.ecars.database.sqilte.DatabaseHelper
 import com.yaromchikv.ecars.model.Car
 
@@ -20,17 +18,19 @@ internal const val COLUMN_IMAGE = "image"
 
 internal const val QUERY_ORDER_BY_NAME_ASC = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_NAME ASC"
 internal const val QUERY_ORDER_BY_NAME_DESC = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_NAME DESC"
-internal const val QUERY_ORDER_BY_ACCELERATION_ASC = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ACCELERATION ASC"
-internal const val QUERY_ORDER_BY_ACCELERATION_DESC = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ACCELERATION DESC"
+internal const val QUERY_ORDER_BY_ACCELERATION_ASC =
+    "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ACCELERATION ASC"
+internal const val QUERY_ORDER_BY_ACCELERATION_DESC =
+    "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ACCELERATION DESC"
 internal const val QUERY_ORDER_BY_PRICE_ASC = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_PRICE ASC"
-internal const val QUERY_ORDER_BY_PRICE_DESC = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_PRICE DESC"
+internal const val QUERY_ORDER_BY_PRICE_DESC =
+    "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_PRICE DESC"
 
-class CarRepository(context: Context) {
-
-    private var carDatabase = DatabaseHelper(context)
-    private var carDao: CarDao = CarDatabase.getDatabase(context).carDao()
-
-    private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+class CarRepository(
+    private val carDao: CarDao,
+    private val carDatabaseHelper: DatabaseHelper,
+    private val prefs: SharedPreferences
+) {
 
     val allData: LiveData<List<Car>> = getDataUsingRoom(
         prefs.getString("sort_by", "name") ?: "name",
@@ -42,7 +42,7 @@ class CarRepository(context: Context) {
         if (useRoom)
             carDao.addCar(car)
         else
-            carDatabase.addCar(car)
+            carDatabaseHelper.addCar(car)
     }
 
     suspend fun updateCar(car: Car) {
@@ -50,7 +50,7 @@ class CarRepository(context: Context) {
         if (useRoom)
             carDao.updateCar(car)
         else
-            carDatabase.updateCar(car)
+            carDatabaseHelper.updateCar(car)
     }
 
     suspend fun deleteCar(car: Car) {
@@ -58,12 +58,12 @@ class CarRepository(context: Context) {
         if (useRoom)
             carDao.deleteCar(car)
         else
-            carDatabase.deleteCar(car)
+            carDatabaseHelper.deleteCar(car)
     }
 
     fun getDataUsingCursors(sortBy: String, sortOrder: String): List<Car> {
         val listOfCar = mutableListOf<Car>()
-        val cursor = carDatabase.getCursorWithData(sortBy, sortOrder)
+        val cursor = carDatabaseHelper.getCursorWithData(sortBy, sortOrder)
         if (cursor != null && cursor.count != 0) {
             while (cursor.moveToNext()) {
                 listOfCar.add(

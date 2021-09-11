@@ -61,19 +61,15 @@ class UpdateFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter the model of the E-Car", Toast.LENGTH_SHORT).show()
             acceleration == null ->
                 Toast.makeText(requireContext(), "Please enter the acceleration of the E-Car", Toast.LENGTH_SHORT).show()
-            acceleration < 1 ->
-                Toast.makeText(requireContext(), "Please enter the acceleration greater than 1", Toast.LENGTH_SHORT).show()
             price == null ->
                 Toast.makeText(requireContext(), "Please enter the price of the E-Car", Toast.LENGTH_SHORT).show()
-            price < 100 ->
-                Toast.makeText(requireContext(), "Please enter the price greater than 100", Toast.LENGTH_SHORT).show()
             else -> {
                 val updatedCar =
                     Car(args.currentCar.id, name, acceleration, price, args.currentCar.image)
                 carViewModel.updateCar(updatedCar)
                 Toast.makeText(
                     requireContext(),
-                    "${args.currentCar.name} has been successfully updated",
+                    "${args.currentCar.name} successfully updated",
                     Toast.LENGTH_SHORT
                 ).show()
 

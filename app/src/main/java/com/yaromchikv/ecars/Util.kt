@@ -8,7 +8,10 @@ fun Int.displayPrice(): String {
         builder.append("%d %03d ".format(this / 1000000, (this % 1000000) / 1000))
     else if (this >= 1000)
         builder.append("%d ".format(this / 1000))
-    builder.append("%03d".format(this % 1000))
+    if (this >= 100)
+        builder.append("%03d".format(this % 1000))
+    else
+        builder.append("%d".format(this % 1000))
     return builder.toString()
 }
 
