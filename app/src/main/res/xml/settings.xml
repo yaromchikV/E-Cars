@@ -2,6 +2,7 @@
 
     <SwitchPreference
         app:defaultValue="true"
+        app:icon="@drawable/ic_data_setting"
         app:key="implementation"
         app:summary="If unchecked, Cursors are used"
         app:title="Use Room" />
@@ -11,6 +12,7 @@
             app:defaultValue="name"
             app:entries="@array/sort_by_entries"
             app:entryValues="@array/sort_by_values"
+            app:icon="@drawable/ic_sort_by"
             app:key="sort_by"
             app:title="Sort By"
             app:useSimpleSummaryProvider="true" />
@@ -19,6 +21,7 @@
             app:defaultValue="ASC"
             app:entries="@array/sort_order_entries"
             app:entryValues="@array/sort_order_values"
+            app:icon="@drawable/ic_sort_order"
             app:key="sort_order"
             app:title="Sort Order"
             app:useSimpleSummaryProvider="true" />
