@@ -11,3 +11,14 @@ fun Int.displayPrice(): String {
     builder.append("%03d".format(this % 1000))
     return builder.toString()
 }
+
+fun getRandomImage(): Int {
+    return listOf(
+        R.drawable.car1,
+        R.drawable.car2,
+        R.drawable.car3,
+        R.drawable.car4,
+        R.drawable.car5,
+        R.drawable.car6,
+    ).random()
+}

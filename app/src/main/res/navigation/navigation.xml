@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.yaromchikv.ecars.fragments.settings.SettingsFragment"
-        android:label="Filter" >
+        android:label="Settings" >
         <action
             android:id="@+id/action_settingsFragment_to_listFragment"
             app:destination="@id/listFragment" />

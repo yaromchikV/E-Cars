@@ -52,20 +52,34 @@ class UpdateFragment : Fragment() {
 
     private fun updateItem() {
         val name = binding.updateNameText.editText?.text.toString()
+            .replace("\\s+".toRegex(), " ").trim()
         val acceleration = binding.updateAccelerationText.editText?.text.toString().toDoubleOrNull()
         val price = binding.updatePriceText.editText?.text.toString().toIntOrNull()
 
-        if (name.length > 3 && (acceleration != null && acceleration > 1) && (price != null && price >= 100)) {
-            val updatedCar =
-                Car(args.currentCar.id, name, acceleration, price, args.currentCar.image)
-            carViewModel.updateCar(updatedCar)
-            Toast.makeText(requireContext(), "Update", Toast.LENGTH_SHORT).show()
+        when {
+            name.isEmpty() ->
+                Toast.makeText(requireContext(), "Please enter the model of the E-Car", Toast.LENGTH_SHORT).show()
+            acceleration == null ->
+                Toast.makeText(requireContext(), "Please enter the acceleration of the E-Car", Toast.LENGTH_SHORT).show()
+            acceleration < 1 ->
+                Toast.makeText(requireContext(), "Please enter the acceleration greater than 1", Toast.LENGTH_SHORT).show()
+            price == null ->
+                Toast.makeText(requireContext(), "Please enter the price of the E-Car", Toast.LENGTH_SHORT).show()
+            price < 100 ->
+                Toast.makeText(requireContext(), "Please enter the price greater than 100", Toast.LENGTH_SHORT).show()
+            else -> {
+                val updatedCar =
+                    Car(args.currentCar.id, name, acceleration, price, args.currentCar.image)
+                carViewModel.updateCar(updatedCar)
+                Toast.makeText(
+                    requireContext(),
+                    "${args.currentCar.name} has been successfully updated",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-        } else {
-            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(UpdateFragmentDirections.actionUpdateFragmentToListFragment())
+            }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -86,14 +100,14 @@ class UpdateFragment : Fragment() {
                 carViewModel.deleteCar(args.currentCar)
                 Toast.makeText(
                     requireContext(),
-                    "Delete: ${args.currentCar.name}",
+                    "${args.currentCar.name} successfully deleted",
                     Toast.LENGTH_SHORT
                 ).show()
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
             setNegativeButton("No") { _, _ -> }
-            setTitle("Delete ${args.currentCar.name}?")
-            setMessage("Really?")
+            setTitle("Deleting ${args.currentCar.name}")
+            setMessage("Do you really want to delete this E-Car?")
         }.create().show()
     }
 }

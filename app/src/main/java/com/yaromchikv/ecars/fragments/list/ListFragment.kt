@@ -59,7 +59,7 @@ class ListFragment : Fragment() {
         }
 
         binding.floatingActionButton.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+            findNavController().navigate(ListFragmentDirections.actionListFragmentToAddFragment())
         }
     }
 
@@ -69,7 +69,7 @@ class ListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_settings) {
-            findNavController().navigate(R.id.action_listFragment_to_settingsFragment)
+            findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingsFragment())
         }
         return super.onOptionsItemSelected(item)
     }

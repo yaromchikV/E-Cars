@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yaromchikv.ecars.R
 import com.yaromchikv.ecars.databinding.FragmentAddBinding
+import com.yaromchikv.ecars.fragments.update.UpdateFragmentDirections
+import com.yaromchikv.ecars.getRandomImage
 import com.yaromchikv.ecars.model.Car
 import com.yaromchikv.ecars.viewmodel.CarViewModel
 
@@ -49,13 +51,24 @@ class AddFragment : Fragment() {
         val acceleration = binding.addAccelerationText.editText?.text.toString().toDoubleOrNull()
         val price = binding.addPriceText.editText?.text.toString().toIntOrNull()
 
-        if (name.length > 3 && (acceleration != null && acceleration > 1) && (price != null && price >= 100)) {
-            val car = Car(0, name, acceleration, price, carViewModel.getRandomImage())
-            carViewModel.addCar(car)
-            Toast.makeText(requireContext(), "Added!", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_addFragment_to_listFragment)
-        } else {
-            Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
+        when {
+            name.isEmpty() ->
+                Toast.makeText(requireContext(), "Please enter the model of the E-Car", Toast.LENGTH_SHORT).show()
+            acceleration == null ->
+                Toast.makeText(requireContext(), "Please enter the acceleration of the E-Car", Toast.LENGTH_SHORT).show()
+            acceleration < 1 ->
+                Toast.makeText(requireContext(), "Please enter the acceleration greater than 1", Toast.LENGTH_SHORT).show()
+            price == null ->
+                Toast.makeText(requireContext(), "Please enter the price of the E-Car", Toast.LENGTH_SHORT).show()
+            price < 100 ->
+                Toast.makeText(requireContext(), "Please enter the price greater than 100", Toast.LENGTH_SHORT).show()
+            else -> {
+                val car = Car(0, name, acceleration, price, getRandomImage())
+                carViewModel.addCar(car)
+                Toast.makeText(requireContext(), "Added!", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(AddFragmentDirections.actionAddFragmentToListFragment())
+            }
         }
+
     }
 }
