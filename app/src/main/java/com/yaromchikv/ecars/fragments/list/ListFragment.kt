@@ -2,15 +2,14 @@ package com.yaromchikv.ecars.fragments.list
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yaromchikv.ecars.R
 import com.yaromchikv.ecars.databinding.FragmentListBinding
 import com.yaromchikv.ecars.viewmodel.CarViewModel
-
 
 class ListFragment : Fragment() {
 
@@ -48,9 +47,13 @@ class ListFragment : Fragment() {
         if (carViewModel.prefs.getBoolean("use_room", true)) {
             carViewModel.getDataUsingRoom().observe(viewLifecycleOwner, { newListOfCar ->
                 listAdapter.setData(newListOfCar)
+                binding.emptyBox.isVisible = listAdapter.itemCount == 0
+                binding.emptyText.isVisible = listAdapter.itemCount == 0
             })
         } else {
             listAdapter.setData(carViewModel.getDataUsingCursors())
+            binding.emptyBox.isVisible = listAdapter.itemCount == 0
+            binding.emptyText.isVisible = listAdapter.itemCount == 0
         }
 
         binding.floatingActionButton.setOnClickListener {
