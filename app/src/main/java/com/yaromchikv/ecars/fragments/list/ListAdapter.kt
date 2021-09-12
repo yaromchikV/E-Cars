@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yaromchikv.ecars.databinding.DataItemBinding
 import com.yaromchikv.ecars.displayAcceleration
 import com.yaromchikv.ecars.displayPrice
+import com.yaromchikv.ecars.displayRange
 import com.yaromchikv.ecars.model.Car
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
@@ -18,6 +19,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         fun bind(car: Car) {
             binding.nameText.text = car.name
             binding.accelerationText.text = car.acceleration.displayAcceleration()
+            binding.rangeText.text = car.range.displayRange()
             binding.priceText.text = car.price.displayPrice()
             binding.carImage.setImageResource(car.image)
 

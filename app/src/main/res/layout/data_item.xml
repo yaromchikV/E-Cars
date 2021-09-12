@@ -47,6 +47,14 @@
                 tools:text="0-100 km/h: 3.3s" />
 
             <TextView
+                android:id="@+id/range_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="?android:attr/textColorSecondary"
+                tools:text="Range: 534 km" />
+
+            <TextView
                 android:id="@+id/price_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

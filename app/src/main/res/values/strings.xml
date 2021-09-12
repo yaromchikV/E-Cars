@@ -9,4 +9,5 @@
     <string name="delete">Delete</string>
     <string name="add_the_car">Add the car</string>
     <string name="price">Price ($)</string>
+    <string name="range_km">Range (km)</string>
 </resources>

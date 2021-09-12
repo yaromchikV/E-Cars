@@ -3,7 +3,7 @@
     <SwitchPreference
         app:defaultValue="true"
         app:icon="@drawable/ic_data_setting"
-        app:key="implementation"
+        app:key="use_room"
         app:summary="If unchecked, Cursors are used"
         app:title="Use Room" />
 

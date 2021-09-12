@@ -2,6 +2,8 @@ package com.yaromchikv.ecars
 
 fun Double.displayAcceleration() = "0-100 km/h: ${this}s"
 
+fun Int.displayRange() = "Range: $this"
+
 fun Int.displayPrice(): String {
     val builder = StringBuilder("Price: $")
     if (this >= 1000000)

@@ -8,9 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.yaromchikv.ecars.R
 import com.yaromchikv.ecars.databinding.FragmentAddBinding
-import com.yaromchikv.ecars.fragments.update.UpdateFragmentDirections
 import com.yaromchikv.ecars.getRandomImage
 import com.yaromchikv.ecars.model.Car
 import com.yaromchikv.ecars.viewmodel.CarViewModel
@@ -49,6 +47,7 @@ class AddFragment : Fragment() {
         val name = binding.addNameText.editText?.text.toString()
             .replace("\\s+".toRegex(), " ").trim()
         val acceleration = binding.addAccelerationText.editText?.text.toString().toDoubleOrNull()
+        val range = binding.addRangeText.editText?.text.toString().toIntOrNull()
         val price = binding.addPriceText.editText?.text.toString().toIntOrNull()
 
         when {
@@ -56,10 +55,12 @@ class AddFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter the model of the E-Car", Toast.LENGTH_SHORT).show()
             acceleration == null ->
                 Toast.makeText(requireContext(), "Please enter the acceleration of the E-Car", Toast.LENGTH_SHORT).show()
+            range == null ->
+                Toast.makeText(requireContext(), "Please enter the range of the E-Car", Toast.LENGTH_SHORT).show()
             price == null ->
                 Toast.makeText(requireContext(), "Please enter the price of the E-Car", Toast.LENGTH_SHORT).show()
             else -> {
-                val car = Car(0, name, acceleration, price, getRandomImage())
+                val car = Car(0, name, acceleration, range, price, getRandomImage())
                 carViewModel.addCar(car)
                 Toast.makeText(requireContext(), "$name successfully added", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(AddFragmentDirections.actionAddFragmentToListFragment())

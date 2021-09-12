@@ -31,6 +31,7 @@ class DatabaseHelper(context: Context?) :
         return ContentValues().apply {
             put(COLUMN_NAME, car.name)
             put(COLUMN_ACCELERATION, car.acceleration)
+            put(COLUMN_RANGE, car.range)
             put(COLUMN_PRICE, car.price)
             put(COLUMN_IMAGE, car.image)
         }

@@ -43,6 +43,7 @@ class UpdateFragment : Fragment() {
 
         binding.updateNameText.editText?.setText(args.currentCar.name)
         binding.updateAccelerationText.editText?.setText(args.currentCar.acceleration.toString())
+        binding.updateRangeText.editText?.setText(args.currentCar.range.toString())
         binding.updatePriceText.editText?.setText(args.currentCar.price.toString())
 
         binding.updateButton.setOnClickListener {
@@ -54,6 +55,7 @@ class UpdateFragment : Fragment() {
         val name = binding.updateNameText.editText?.text.toString()
             .replace("\\s+".toRegex(), " ").trim()
         val acceleration = binding.updateAccelerationText.editText?.text.toString().toDoubleOrNull()
+        val range = binding.updateRangeText.editText?.text.toString().toIntOrNull()
         val price = binding.updatePriceText.editText?.text.toString().toIntOrNull()
 
         when {
@@ -61,11 +63,13 @@ class UpdateFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter the model of the E-Car", Toast.LENGTH_SHORT).show()
             acceleration == null ->
                 Toast.makeText(requireContext(), "Please enter the acceleration of the E-Car", Toast.LENGTH_SHORT).show()
+            range == null ->
+                Toast.makeText(requireContext(), "Please enter the range of the E-Car", Toast.LENGTH_SHORT).show()
             price == null ->
                 Toast.makeText(requireContext(), "Please enter the price of the E-Car", Toast.LENGTH_SHORT).show()
             else -> {
                 val updatedCar =
-                    Car(args.currentCar.id, name, acceleration, price, args.currentCar.image)
+                    Car(args.currentCar.id, name, acceleration, range, price, args.currentCar.image)
                 carViewModel.updateCar(updatedCar)
                 Toast.makeText(
                     requireContext(),

@@ -9,10 +9,11 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "cars_table")
 data class Car(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    val id: Int,
 
     val name: String,
     val acceleration: Double,
+    val range: Int,
     val price: Int,
     val image: Int
 

@@ -29,6 +29,12 @@ interface CarDao {
     @Query(QUERY_ORDER_BY_ACCELERATION_DESC)
     fun getAllSortedByAccelerationInDescendingOrder(): LiveData<List<Car>>
 
+    @Query(QUERY_ORDER_BY_RANGE_ASC)
+    fun getAllSortedByRangeInAscendingOrder(): LiveData<List<Car>>
+
+    @Query(QUERY_ORDER_BY_RANGE_DESC)
+    fun getAllSortedByRangeInDescendingOrder(): LiveData<List<Car>>
+
     @Query(QUERY_ORDER_BY_PRICE_ASC)
     fun getAllSortedByPriceInAscendingOrder(): LiveData<List<Car>>
 

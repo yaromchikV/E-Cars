@@ -1,6 +1,7 @@
 package com.yaromchikv.ecars.viewmodel
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -16,14 +17,9 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
 
     private val carDao = CarDatabase.getDatabase(application).carDao()
     private val carDatabaseHelper = DatabaseHelper(application)
-    private val prefs = PreferenceManager.getDefaultSharedPreferences(application)
+    val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
     private val repository = CarRepository(carDao, carDatabaseHelper, prefs)
-
-    var allDataFromRoom: LiveData<List<Car>> = repository.allData
-
-    var sortBy = "name"
-    var sortOrder = "ASC"
 
     fun addCar(car: Car) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,10 +40,16 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getDataUsingCursors(): List<Car> {
-        return repository.getDataUsingCursors(sortBy, sortOrder)
+        return repository.getDataUsingCursors(
+            prefs.getString("sort_by", "name") ?: "name",
+            prefs.getString("sort_order", "ASC") ?: "ASC"
+        )
     }
 
-    fun changeDaoQuery() {
-        allDataFromRoom = repository.changeDaoQuery(sortBy, sortOrder)
+    fun getDataUsingRoom(): LiveData<List<Car>> {
+        return repository.getDataUsingRoom(
+            prefs.getString("sort_by", "name") ?: "name",
+            prefs.getString("sort_order", "ASC") ?: "ASC"
+        )
     }
 }
