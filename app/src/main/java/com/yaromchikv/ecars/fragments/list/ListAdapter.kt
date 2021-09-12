@@ -2,8 +2,10 @@ package com.yaromchikv.ecars.fragments.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.yaromchikv.ecars.R
 import com.yaromchikv.ecars.databinding.DataItemBinding
 import com.yaromchikv.ecars.displayAcceleration
 import com.yaromchikv.ecars.displayPrice
@@ -22,6 +24,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             binding.rangeText.text = car.range.displayRange()
             binding.priceText.text = car.price.displayPrice()
             binding.carImage.setImageResource(car.image)
+
+            binding.cardView.animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.translate_anim)
 
             binding.cardView.setOnClickListener {
                 val action = ListFragmentDirections.actionListFragmentToUpdateFragment(car)
